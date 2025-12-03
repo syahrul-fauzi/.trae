@@ -1,0 +1,13 @@
+flowchart LR
+  Conversation[Conversation Context]
+  Knowledge[Knowledge/CMS Context]
+  Document[Document Context]
+  Workflow[Workflow/Task Context]
+  Tenant[Tenant & Billing]
+
+  Conversation --- Knowledge
+  Conversation --- Document
+  Conversation --- Workflow
+  Tenant --- Conversation
+  Tenant --- Workflow
+  Tenant --- Document

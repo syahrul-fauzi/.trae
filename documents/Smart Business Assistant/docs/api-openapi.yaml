@@ -1,0 +1,181 @@
+openapi: 3.0.3
+info:
+  title: SBA Tool API
+  version: 1.0.0
+paths:
+  /tools/getDocument:
+    post:
+      summary: Retrieve blocks from BaseHub
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KnowledgeToolParams'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KnowledgeToolResult'
+              example:
+                hits:
+                  - id: "blk_123"
+                    title: "SOP Pengajuan Cuti"
+                    snippet: "Langkah pengajuan cuti untuk karyawan"
+                    score: 0.92
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModel'
+              example:
+                success: false
+                code: BAD_REQUEST
+                message: "query is required"
+                retryable: false
+        '429':
+          description: Rate Limit
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModel'
+              example:
+                success: false
+                code: RATE_LIMIT
+                message: "Too many requests"
+                retryable: true
+  /tools/renderDocument:
+    post:
+      summary: Render document from template
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RenderToolParams'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RenderToolResult'
+              example:
+                url: "https://blob.example.com/tenants/t1/docs/doc_456.pdf"
+                commitId: "bh_commit_789"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModel'
+        '503':
+          description: Service Unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModel'
+              example:
+                success: false
+                code: UNAVAILABLE
+                message: "Render service busy"
+                retryable: true
+  /tools/createTask:
+    post:
+      summary: Create a task with metadata
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskToolParams'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskToolResult'
+              example:
+                taskId: "task_001"
+                status: "created"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModel'
+        '409':
+          description: Conflict (Idempotent Replayed)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModel'
+              example:
+                success: false
+                code: CONFLICT
+                message: "Duplicate idempotency key"
+                retryable: false
+components:
+  schemas:
+    KnowledgeToolParams:
+      type: object
+      required: [tenantId, query]
+      properties:
+        tenantId: { type: string }
+        query: { type: string }
+    KnowledgeToolResult:
+      type: object
+      properties:
+        hits:
+          type: array
+          items:
+            type: object
+            properties:
+              id: { type: string }
+              title: { type: string }
+              snippet: { type: string }
+              score: { type: number }
+    RenderToolParams:
+      type: object
+      required: [templateId, data]
+      properties:
+        templateId: { type: string }
+        data:
+          type: object
+          additionalProperties: true
+    RenderToolResult:
+      type: object
+      properties:
+        url: { type: string }
+        commitId: { type: string }
+    TaskToolParams:
+      type: object
+      required: [tenantId, title]
+      properties:
+        tenantId: { type: string }
+        title: { type: string }
+        assignee: { type: string }
+        metadata:
+          type: object
+          additionalProperties: true
+        idempotencyKey: { type: string }
+    TaskToolResult:
+      type: object
+      properties:
+        taskId: { type: string }
+        status: { type: string }
+    ErrorModel:
+      type: object
+      required: [success, code, message]
+      properties:
+        success: { type: boolean }
+        code: { type: string, enum: [TOOL_ERROR, RATE_LIMIT, NOT_FOUND, BAD_REQUEST, CONFLICT, UNAVAILABLE] }
+        message: { type: string }
+        retryable: { type: boolean }
+        payload:
+          type: object
+          additionalProperties: true

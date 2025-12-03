@@ -1,0 +1,26 @@
+flowchart LR
+  subgraph CLIENT
+    Browser[AG-UI Client]
+  end
+  subgraph PRESENTATION
+    Frontend[Next.js]
+  end
+  subgraph AGENT
+    Orchestrator
+    Tools
+    Session[Redis]
+    Model[LLM]
+  end
+  subgraph CMS
+    BaseHub
+    Blob[S3/R2]
+    Vector[VectorDB]
+  end
+  Browser -->|WS/HTTP| Frontend
+  Frontend --> Orchestrator
+  Orchestrator --> Tools
+  Tools --> BaseHub
+  Tools --> Blob
+  Tools --> Vector
+  Orchestrator --> Session
+  Orchestrator --> Model

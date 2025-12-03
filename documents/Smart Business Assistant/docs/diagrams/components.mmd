@@ -1,0 +1,26 @@
+flowchart TB
+  subgraph Frontend
+    Web[Next.js AG-UI]
+    Admin[Admin Dashboard]
+  end
+  subgraph Backend
+    API[Agent Orchestrator]
+    Worker[Render/Index Workers]
+    Tools[Tool Registry]
+  end
+  subgraph Data
+    Postgres[(Postgres + RLS)]
+    Redis[(Redis Session)]
+    S3[(Blob Store)]
+    Vector[(Vector DB Optional)]
+    BaseHub[BaseHub CMS]
+  end
+  Web --> API
+  Admin --> API
+  API --> Tools
+  Tools --> BaseHub
+  Tools --> S3
+  Tools --> Vector
+  API --> Postgres
+  API --> Redis
+  Worker --> S3

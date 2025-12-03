@@ -1,0 +1,18 @@
+<mxfile host="app.diagrams.net" modified="2025-11-29" agent="5.0" version="20.7.4" type="device">
+  <diagram id="int" name="Integration Sequence">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="800">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="o" value="Orchestrator" style="shape=rectangle;fill=#fff0f6;stroke=#eb2f96" vertex="1" parent="1"><mxGeometry x="60" y="80" width="200" height="60" as="geometry"/></mxCell>
+        <mxCell id="cn" value="Connector" style="shape=rectangle;fill=#e6fffb;stroke=#13c2c2" vertex="1" parent="1"><mxGeometry x="300" y="80" width="200" height="60" as="geometry"/></mxCell>
+        <mxCell id="sys" value="External System" style="shape=rectangle;fill=#e6fffb;stroke=#13c2c2" vertex="1" parent="1"><mxGeometry x="540" y="80" width="220" height="60" as="geometry"/></mxCell>
+        <mxCell id="log" value="Telemetry" style="shape=rectangle;fill=#fafafa;stroke=#8c8c8c" vertex="1" parent="1"><mxGeometry x="800" y="80" width="200" height="60" as="geometry"/></mxCell>
+        <mxCell id="e1" edge="1" source="o" target="cn" style="endArrow=classic;stroke=#333" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e2" edge="1" source="cn" target="sys" style="endArrow=classic;stroke=#333" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e3" edge="1" source="cn" target="log" style="endArrow=classic;stroke=#333" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
+
