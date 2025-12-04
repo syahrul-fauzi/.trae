@@ -1,0 +1,6 @@
+%% Mermaid architecture diagram for apps/docs (Docs Site)
+flowchart LR
+  Dev[Developer] --> DOCS[Docs Site]
+  DOCS -- Fetch --> BaseHub[(BaseHub Content)]
+  DOCS -- OpenAPI Sync --> OAS[OpenAPI]
+  DOCS -- CDN Cache --> CDN[CDN]

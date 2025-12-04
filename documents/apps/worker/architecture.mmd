@@ -1,0 +1,6 @@
+%% Mermaid architecture diagram for apps/worker
+flowchart LR
+  Queue[[Queue]] --> Worker[Worker Runtime]
+  Worker -- HTTP/API --> API[Unified API]
+  Worker -- OAuth/API --> Integrations
+  Worker -- Logs/Metrics --> Obs[Observability]

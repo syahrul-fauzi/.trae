@@ -1,0 +1,8 @@
+%% Mermaid architecture diagram for apps/orchestrator
+flowchart LR
+  Orchestrator --> Workers
+  Orchestrator --> API
+  Orchestrator --> DB[(Postgres)]
+  Orchestrator --> Integrations
+  Orchestrator --> Obs[Observability]
+  Orchestrator --> Scheduler

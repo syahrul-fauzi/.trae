@@ -1,0 +1,16 @@
+%% Mermaid architecture diagram for apps/api
+flowchart LR
+  subgraph SBA System
+    API[Unified API]
+    ORCH[Agentic Orchestrator]
+    W[Workers]
+    KB[BaseHub / Knowledge]
+    DB[(Postgres RLS)]
+  end
+  C[Client / AG-UI] --> API
+  API -- SSE/Events --> ORCH
+  ORCH -- Jobs --> W
+  W -- OAuth/API --> I[Integrations]
+  ORCH -- Read/Write --> KB
+  API -- Prisma --> DB
+  class API,ORCH,W,KB,DB node

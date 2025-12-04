@@ -1,0 +1,5 @@
+%% Mermaid architecture diagram for apps/web
+flowchart LR
+  Visitor --> WEB[Web]
+  WEB -- Status/API --> API[Unified API]
+  WEB -- CDN --> CDN[CDN]

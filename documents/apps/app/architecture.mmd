@@ -1,0 +1,8 @@
+%% Mermaid architecture diagram for apps/app (AG-UI)
+flowchart LR
+  U[User] --> AGUI[AG‑UI]
+  AGUI -- HTTPS/API --> API[Unified API]
+  AGUI -- SSE (events) --> ORCH[Agentic Orchestrator]
+  AGUI -- Notifications --> Slack[Slack/Email]
+  API -- RBAC/Scopes --> ID[Identity]
+  API -- Data --> DB[(Postgres RLS)]

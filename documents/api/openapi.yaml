@@ -1,16 +1,19 @@
 openapi: 3.1.0
 info:
-  title: Smart Business Assistant API
-  version: 0.1.0
-  description: API untuk SBA (multi-tenant, agentic, workflow, knowledge)
+  title: SBA-Agentic API
+  version: 1.0.0
+  description: Unified API untuk agent, workflow, knowledge, integrations, dan billing.
+  termsOfService: https://example.com/terms
   contact:
     name: SBA Team
-    url: https://example.com
     email: support@example.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
 servers:
-  - url: http://localhost:3000/api
-    description: Local
-  - url: https://api.example.com
+  - url: https://api.sba.local
+    description: Development
+  - url: https://api.sba.example.com
     description: Production
 security:
   - bearerAuth: []
@@ -20,15 +23,6 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
-    oauth2:
-      type: oauth2
-      flows:
-        authorizationCode:
-          authorizationUrl: https://auth.example.com/authorize
-          tokenUrl: https://auth.example.com/token
-          scopes:
-            read: Baca data
-            write: Tulis data
   schemas:
     Error:
       type: object
@@ -37,214 +31,229 @@ components:
           type: string
         message:
           type: string
+        hint:
+          type: string
         details:
           type: object
+        requestId:
+          type: string
       required: [code, message]
-    Tenant:
+      examples:
+        validation:
+          value:
+            code: VALIDATION_ERROR
+            message: Invalid payload
+            hint: Check required fields
+            details:
+              fieldErrors:
+                - path: workflowId
+                  issue: required
+    PlanRequest:
+      type: object
+      properties:
+        goal:
+          type: string
+        context:
+          type: object
+      required: [goal]
+    ExecuteRequest:
+      type: object
+      properties:
+        planId:
+          type: string
+        stepId:
+          type: string
+        input:
+          type: object
+      required: [planId, stepId]
+    WorkflowRun:
       type: object
       properties:
         id:
           type: string
-        name:
+        status:
+          type: string
+        tenantId:
           type: string
         createdAt:
           type: string
           format: date-time
-      required: [id, name]
-    Workflow:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        steps:
-          type: array
-          items:
-            type: object
-      required: [id, name]
-    AgentRunRequest:
-      type: object
-      properties:
-        task:
-          type: string
-        context:
-          type: object
-      required: [task]
 paths:
-  /auth/login:
+  /agent/plan:
     post:
-      summary: Login pengguna dan terima JWT
+      summary: Buat rencana eksekusi agent
+      description: Menghasilkan rencana langkah-langkah untuk mencapai goal tertentu.
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                email:
-                  type: string
-                  format: email
-                password:
-                  type: string
-              required: [email, password]
+              $ref: '#/components/schemas/PlanRequest'
             examples:
               default:
                 value:
-                  email: user@example.com
-                  password: secret
+                  goal: "Sinkronisasi CRM untuk kontak baru"
+                  context:
+                    source: "forms"
       responses:
         '200':
-          description: Token berhasil diterbitkan
+          description: Rencana berhasil dibuat
           content:
             application/json:
               schema:
                 type: object
                 properties:
-                  token:
+                  planId:
                     type: string
-              examples:
-                default:
-                  value:
-                    token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
-        '401':
-          description: Kredensial tidak valid
+                  steps:
+                    type: array
+                    items:
+                      type: object
+               examples:
+                 success:
+                   value:
+                     planId: "plan_123"
+                     steps:
+                       - id: "step_1"
+                         action: "fetch_leads"
+                       - id: "step_2"
+                         action: "validate"
+        '400':
+          description: Kesalahan validasi
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-  /tenants:
-    get:
-      summary: Daftar tenant
-      security:
-        - bearerAuth: []
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Tenant'
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+  /agent/execute:
     post:
-      summary: Buat tenant baru
-      security:
-        - bearerAuth: []
+      summary: Eksekusi langkah agent
+      description: Menjalankan langkah tertentu pada rencana agent.
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                name:
-                  type: string
-              required: [name]
-      responses:
-        '201':
-          description: Created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Tenant'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-  /workflows:
-    get:
-      summary: Daftar workflow
-      security:
-        - bearerAuth: []
+              $ref: '#/components/schemas/ExecuteRequest'
+            examples:
+              default:
+                value:
+                  planId: "plan_123"
+                  stepId: "step_1"
+                  input:
+                    provider: "crm"
       responses:
         '200':
-          description: OK
+          description: Eksekusi berhasil
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Workflow'
-        '401':
-          description: Unauthorized
+                type: object
+                properties:
+                  runId:
+                    type: string
+                  status:
+                    type: string
+               examples:
+                 started:
+                   value:
+                     runId: "run_abc123"
+                     status: "running"
+        '400':
+          description: Kesalahan validasi
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-  /workflows/{id}:
+  /workflow/runs:
+    post:
+      summary: Buat workflow run
+      description: Membuat run baru untuk workflow yang terdaftar.
+      responses:
+        '200':
+          description: Run berhasil dibuat
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkflowRun'
+  /workflow/runs/{id}:
     get:
-      summary: Detail workflow
+      summary: Detail run
+      description: Mengambil detail run berdasarkan ID.
       parameters:
         - in: path
           name: id
           required: true
           schema:
             type: string
-      security:
-        - bearerAuth: []
       responses:
         '200':
-          description: OK
+          description: Detail run
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Workflow'
-        '404':
-          description: Tidak ditemukan
+                $ref: '#/components/schemas/WorkflowRun'
+  /workflow/runs/{id}/events:
+    get:
+      summary: Event stream (SSE)
+      description: Mengalirkan event run dalam format Server-Sent Events.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: SSE stream
           content:
-            application/json:
+            text/event-stream:
               schema:
-                $ref: '#/components/schemas/Error'
-  /agents/run:
+                type: string
+  /integrations/{provider}/oauth/callback:
     post:
-      summary: Jalankan agentic task
-      security:
-        - bearerAuth: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AgentRunRequest'
+      summary: OAuth callback
+      description: Memproses callback OAuth untuk provider integrasi.
+      parameters:
+        - in: path
+          name: provider
+          required: true
+          schema:
+            type: string
       responses:
         '200':
-          description: Hasil eksekusi agent
+          description: Integrasi diperbarui
           content:
             application/json:
               schema:
                 type: object
                 properties:
-                  output:
+                  status:
                     type: string
-                  steps:
-                    type: array
-                    items:
-                      type: object
-        '400':
-          description: Bad Request
+  /docs/sop/{id}:
+    get:
+      summary: SOP/guide by id
+      description: Mengambil konten SOP berdasarkan ID.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Konten SOP
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
-        '429':
-          description: Rate limited
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-        '500':
-          description: Server error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-
+                type: object
+                properties:
+                  id:
+                    type: string
+                  title:
+                    type: string
+                  body:
+                    type: string
+x-api-versioning:
+  defaultVersion: v1
+  strategy: header
+  headerName: X-API-Version

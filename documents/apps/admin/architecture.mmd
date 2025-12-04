@@ -1,0 +1,7 @@
+%% Mermaid architecture diagram for apps/admin
+flowchart LR
+  AdminUser --> AdminUI[Admin Console]
+  AdminUI -- HTTPS/API --> AdminAPI
+  AdminAPI -- RBAC/Scopes --> ID[Identity]
+  AdminAPI -- Data --> DB[(Postgres RLS)]
+  AdminUI -- Observability --> Obs[Dashboards]

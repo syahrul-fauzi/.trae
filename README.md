@@ -377,18 +377,16 @@ pnpm build
 
 # **📌 15. License**
 
-Lisensi: MIT
-## packages/ui — Atomic Design System
+MIT (optional sesuai keputusan Anda)
 
-- Paket komponen reusable berbasis Atomic Design: `atoms/`, `molecules/`, `organisms/`, `templates/`, `pages/`, dengan ekspor terpusat via `src/index.ts`.
-- TypeScript type safety, linting ESLint, formatting Prettier, Storybook, unit test `Jest` + Testing Library, visual regression dengan `@storybook/test-runner`.
-- Penggunaan:
-  - Tambahkan `@sba/ui` sebagai dependency workspace
-  - Import komponen: `import { Button, Card, Header, DashboardTemplate } from '@sba/ui'`
-- CI/CD publish:
-  - Tag semver `ui-vX.Y.Z` akan memicu build, test, visual regression, dan publish ke registry.
+---
 
-## Dokumentasi (documents/)
-- Struktur baru mencakup: `architecture/`, `api/`, `guides/`, `templates/`, `meetings/`, `decisions/`, `legal/`, dan direktori pendukung lainnya.
-- Lihat `documents/README.md` untuk navigasi, konvensi penamaan, metadata, dan referensi tooling.
- - Kategori ringkas: `dokumen-proyek/`, `spesifikasi-teknis/`, `laporan/`, `arsip/` sebagai agregasi tematik.
+Jika Anda ingin, saya bisa lanjutkan dengan:
+
+✅ membuat **README untuk setiap apps/**
+✅ membuat **diagram arsitektur C4 Model**
+✅ membuat **OpenAPI 3.1 lengkap**
+✅ membuat **project boilerplate folder + file struktur**
+✅ membuat **versi PDF**
+
+Tinggal sebutkan kebutuhan selanjutnya.
