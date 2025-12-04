@@ -1,0 +1,42 @@
+name: Monorepo CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  lint_test_build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      - name: Cache turbo
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/turbo
+          key: turbo-${{ runner.os }}-${{ hashFiles('**/package-lock.json', '**/pnpm-lock.yaml', '**/yarn.lock') }}
+      - name: Cache node_modules
+        uses: actions/cache@v4
+        with:
+          path: |
+            **/node_modules
+          key: node-${{ runner.os }}-${{ hashFiles('**/package-lock.json', '**/pnpm-lock.yaml', '**/yarn.lock') }}
+      - name: Install deps
+        run: npm ci || npm i
+      - name: Lint all
+        run: npx turbo run lint
+      - name: Test all
+        run: npx turbo run test
+      - name: Build all
+        run: npx turbo run build
+      - name: Storybook visual test (@sba/ui)
+        run: |
+          cd documents/templates/monorepo/packages/ui
+          npm run build-storybook
+          npx test-storybook --watch false

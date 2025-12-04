@@ -1,0 +1,15 @@
+RequirementID,FeatureID,TestID,Notes
+REQ-001,FEAT-001,T-001,Isolasi tenant melalui RLS diuji negatif
+REQ-010,FEAT-001,T-002,Mapping peran→kebijakan diuji akses
+REQ-002,FEAT-002,T-003,Thread konteks konsisten antar pesan
+REQ-002,FEAT-002,T-004,Tools execution mengembalikan hasil terstruktur
+REQ-003,FEAT-003,T-005,Node create/link/validate/autosave berjalan
+REQ-011,FEAT-003,T-006,Deploy menghasilkan versi dapat rollback
+REQ-004,FEAT-004,T-007,Adapter patuh kontrak; rate limit; auth
+REQ-005,FEAT-005,T-008,CSP/Trusted Types/Permissions-Policy aktif
+REQ-006,FEAT-006,T-009,Telemetry p95 jalur kritis terekam
+REQ-008,FEAT-007,T-010,Gate kualitas mencegah deploy saat test gagal
+REQ-007,FEAT-008,T-011,WCAG AA: keyboard + screen reader lolos
+REQ-009,FEAT-009,T-012,PII masking saat ingestion; index search relevan
+REQ-011,FEAT-010,T-013,Monitoring dan rollback versi berfungsi
+

@@ -1,0 +1,12 @@
+flowchart TB
+  subgraph Designer
+    A[Define nodes] --> B[Link edges]
+    B --> C[Set triggers]
+  end
+  C --> D[Validate]
+  D --> E{Deploy}
+  E -->|Success| F[Run]
+  E -->|Fail| G[Fix]
+  F --> H[Monitor]
+  H --> I[Rollback if needed]
+

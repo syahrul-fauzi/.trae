@@ -1,0 +1,8 @@
+flowchart TB
+  start([Start]) --> signup[Sign up]
+  signup --> verify[Email/OTP Verification]
+  verify --> createTenant[Create Tenant]
+  createTenant --> assignRoles[Assign Roles]
+  assignRoles --> policy[RLS/RBAC Policy Config]
+  policy --> done([Onboarded])
+

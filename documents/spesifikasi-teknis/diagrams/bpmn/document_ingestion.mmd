@@ -1,0 +1,7 @@
+flowchart LR
+  src[Data Source] --> extract[Extract]
+  extract --> transform[Transform/PII Mask]
+  transform --> index[Index/Search]
+  index --> store[Store Metadata]
+  store --> ready([Ready])
+

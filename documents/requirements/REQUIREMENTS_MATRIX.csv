@@ -1,0 +1,14 @@
+RequirementID,Type,Stakeholders,BusinessProcess,RegulationPolicy,Priority,SourceDoc,Notes
+REQ-001,Functional,End Users;Admins,Workspace multi-tenant management,Data segregation;RLS,Must,Smart Business Assistant PRD.md;ADR-001-shared-db-rls.md,Isolasi tenant dan kontrol akses
+REQ-002,Functional,End Users,Agent chat and context management,Privacy;A11y,Must,UI_UX.md;Feature_Examples_Chat_Doc_Tenant.md,Context thread; message store
+REQ-003,Functional,Business Ops,Workflow automation builder,Auditability,Must,Technical Docs — Architecture & Modules.md;SBA_Flow_Core_Workflow.drawio,Node-based editor
+REQ-004,Functional,Developers,API orchestration & integrations,Rate limits;Auth,Must,api-openapi.yaml;technical-specification-api.md,Adapter pattern
+REQ-005,Non-Functional,Security;Compliance,Security headers CSP; Permissions-Policy; Trusted Types,ISO compliance,Must,Apps_Web — CSP, Permissions-Policy, Trusted Types & Testing.md,Header enforcement
+REQ-006,Non-Functional,Ops;QA,Observability: logging; metrics; tracing,SLI/SLO,Must,Stabilisasi UI_UX, Pengujian Hijau, dan Operasional Agentik Berkelanjutan.md,Standardized telemetry
+REQ-007,Non-Functional,QA;PO,Accessibility AA compliance,WCAG AA,Must,UI-UX & Accessibility Guide.md;Matriks_Kompatibilitas_Aksesibilitas.md,Keyboard; screen reader
+REQ-008,Non-Functional,Engineering,CI/CD pipeline,Change management,Must,ci-cd.md;CI_CD_Pipeline.md,Build; test; deploy
+REQ-009,Functional,End Users,Document ingestion and search,PII handling,Should,Feature_Examples_Chat_Doc_Tenant.md,Indexing; metadata
+REQ-010,Functional,Admins,Role-based access and permissions,RBAC;RLS,Must,ADR-001-shared-db-rls.md;coding-conventions.md,Policy mapping
+REQ-011,Functional,PO;UX,Workflow monitoring and rollback,Audit,MShould,Testing-Verification-Checklist-Apps-App-SBA-Agentic.md,Versioned workflows
+REQ-012,Non-Functional,Ops,Performance targets,TPS; p95 latency,MShould,Technical Architecture docs,Scaling strategies
+

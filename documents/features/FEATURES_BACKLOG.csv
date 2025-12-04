@@ -1,0 +1,14 @@
+FeatureID,Name,Priority,Complexity,Dependencies,RequirementRefs,Status,Phase,Owner,Effort,Risk,Tests
+FEAT-001,Multi-tenant Workspace Management,must-have,medium,RLS;RBAC;Policy Engine,REQ-001|REQ-010,Planned,Foundation,Platform,10d,High,T-001|T-002
+FEAT-002,Agent Chat + Context Thread + Tools,must-have,medium,Context Store;Tools API;Orchestrator,REQ-002,Planned,Core UX,Apps,12d,Medium,T-003|T-004
+FEAT-003,Workflow Automation Builder node-based,must-have,high,AG-UI;Versioned Storage;Observability,REQ-003|REQ-011,Planned,Core UX,Apps,20d,High,T-005|T-006
+FEAT-004,API Orchestration via Adapter,must-have,medium,Contracts;Auth;Rate Limits,REQ-004,Planned,Foundation,Platform,8d,Medium,T-007
+FEAT-005,AuthN/Z with RLS & RBAC,must-have,medium,DB Policy;Token;Audit,REQ-010|REQ-005,Planned,Foundation,Security,10d,High,T-008
+FEAT-006,Observability (Logs/Metrics/Tracing),must-have,medium,Telemetry Stack;Instrumentation,REQ-006,Planned,Foundation,SRE,7d,Medium,T-009
+FEAT-007,CI/CD Pipeline,must-have,medium,Runner;Secrets;Test Matrix,REQ-008,Planned,Operations,SRE,9d,Medium,T-010
+FEAT-008,A11y WCAG AA + Security Headers,must-have,medium,Linting;A11y Audit;Header Config,REQ-007|REQ-005,Planned,Core UX,UX,8d,Medium,T-011|T-008
+FEAT-009,Document Ingestion & Indexed Search,should-have,medium,Ingestion;Indexer;Metadata Store,REQ-009,Planned,Operations,Platform,12d,Medium,T-012
+FEAT-010,Workflow Monitoring & Rollback,should-have,medium,Versioning;Observability,REQ-011,Planned,Operations,Apps,10d,Medium,T-013
+FEAT-011,Consistent Error Model API & UI,should-have,low,Contracts;UI Notifier,Derived,Planned,Ecosystem,Platform,5d,Low,T-007
+FEAT-012,Workflow Templates,could-have,low,Builder;Template Catalog,Derived,Planned,Ecosystem,Apps,6d,Low,TBD
+FEAT-013,Integrations Marketplace,could-have,high,Adapters;Billing;Approval,Derived,Planned,Ecosystem,Platform,18d,High,TBD

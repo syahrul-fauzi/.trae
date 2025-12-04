@@ -1,0 +1,20 @@
+{
+  "name": "sba-monorepo",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": ["apps/*", "packages/*", "tools/*"],
+  "scripts": {
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "dev": "turbo run dev",
+    "storybook": "turbo run storybook --filter=@sba/ui",
+    "lint:ui": "turbo run lint --filter=@sba/ui",
+    "test:ui": "turbo run test --filter=@sba/ui",
+    "build:ui": "turbo run build --filter=@sba/ui",
+    "release:ui": "gh workflow run release-ui.yml -f release_type=patch"
+  },
+  "devDependencies": {
+    "turbo": "^2.0.0"
+  }
+}

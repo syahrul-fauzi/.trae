@@ -1,0 +1,14 @@
+TestID,FeatureID,Type,Priority,AcceptanceCriteriaRef,Description
+T-001,FEAT-001,security,must,FEAT-001,Validasi isolasi tenant via RLS (uji negatif)
+T-002,FEAT-001,functional,must,FEAT-001,Peran menentukan akses sesuai kebijakan
+T-003,FEAT-002,functional,must,FEAT-002,Thread konteks konsisten antar pesan
+T-004,FEAT-002,functional,should,FEAT-002,Tools execution hasil terstruktur dan fallback bila gagal
+T-005,FEAT-003,functional,must,FEAT-003,Node create/link/validate/autosave
+T-006,FEAT-003,functional,must,FEAT-003,Deploy versi; rollback berhasil
+T-007,FEAT-004,functional,must,FEAT-004,Adapter patuh kontrak; auth; rate limit
+T-008,FEAT-005,security,must,FEAT-005,CSP/Trusted Types/Permissions-Policy aktif
+T-009,FEAT-006,performance,must,FEAT-006,Metrics p95/p99 jalur kritis tercatat
+T-010,FEAT-007,functional,must,FEAT-007,Gate kualitas blok deploy saat test gagal
+T-011,FEAT-008,a11y,must,FEAT-008,Keyboard; screen reader; fokus
+T-012,FEAT-009,functional,should,FEAT-009,PII masking ingestion; index relevansi
+T-013,FEAT-010,functional,should,FEAT-010,Monitoring run; rollback versi

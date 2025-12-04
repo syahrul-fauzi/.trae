@@ -1,0 +1,17 @@
+flowchart LR
+  user(User) --> ui[AG-UI Client]
+  ui --> orchestrator[SBA-Agentic Orchestrator]
+  orchestrator --> agent[AI Agent]
+  agent --> tools[Tools API]
+  tools --> data[Data Sources]
+  data --> tools
+  tools --> agent
+  agent --> orchestrator
+  orchestrator --> ui
+  ui --> user
+  subgraph Error Handling
+    err[Detect Error] --> decide{Retry or Fallback}
+    decide -->|Retry| agent
+    decide -->|Fallback| alt[Show guidance]
+  end
+  orchestrator -.observe.-> obs[Telemetry: logs/metrics/traces]

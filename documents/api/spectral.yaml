@@ -1,0 +1,22 @@
+extends: ["spectral:oas"]
+rules:
+  info-description:
+    description: Info.description harus diisi
+    given: $.info.description
+    then:
+      function: truthy
+  operation-summary:
+    description: Setiap operasi harus punya summary
+    given: $.paths[*][*]
+    then:
+      field: summary
+      function: truthy
+  error-schema-ref:
+    description: Response error harus referensi ke components/schemas/Error
+    given: $.paths[*][*].responses[?(@property.match(/^(4|5)\d{2}$/))].content.application/json.schema
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          $ref: '#/components/schemas/Error'
+
