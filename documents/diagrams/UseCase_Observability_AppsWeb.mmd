@@ -1,0 +1,11 @@
+sequenceDiagram
+  participant Web as Web Dashboard
+  participant App as App Observability API
+  participant Supabase as Supabase
+
+  Web->>App: GET /api/metrics (x-tenant-id)
+  App->>App: ensureTenantHeader + withMetrics
+  App->>Supabase: Count task_runs (errors, total)
+  Supabase-->>App: counts
+  App-->>Web: Prometheus text + registry (p95/p99, error rate, throughput)
+  Web->>Web: Parse metrics → render panels

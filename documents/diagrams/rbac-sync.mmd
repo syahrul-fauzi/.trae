@@ -1,0 +1,8 @@
+sequenceDiagram
+  participant App as App RBAC Policy
+  participant Web as Web Guard
+
+  Web->>App: GET /api/policy (roles, permissions)
+  App-->>Web: JSON policy snapshot
+  Web->>Web: Cache policy; apply guard withRBAC(resource:action)
+  Web-->>App: POST /api/audit (resource,action,outcome,actor,tenant)

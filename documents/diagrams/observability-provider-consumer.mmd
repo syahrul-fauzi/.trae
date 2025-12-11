@@ -1,0 +1,11 @@
+sequenceDiagram
+  participant Web as Web Client
+  participant App as App Metrics API
+
+  Web->>App: GET /api/metrics (x-tenant-id)
+  App-->>Web: JSON summary (p95/p99, counters)
+
+  Web->>App: GET /api/metrics/prometheus (x-tenant-id)
+  App-->>Web: Prometheus text (gauges + histograms)
+
+  note over Web: SDK injeksi header tenant; fallback default metrics jika gagal

@@ -1,0 +1,11 @@
+sequenceDiagram
+  participant Web as Web UI
+  participant App as App Runs API
+
+  Web->>App: GET /api/runs?page=1&status=running
+  App-->>Web: Runs list (paginated)
+  Web->>App: GET /api/runs/{id}
+  App-->>Web: Run detail
+  Web->>App: PUT /api/runs/{id} (pause/resume)
+  App-->>Web: Status updated
+  Web->>Web: Deep-link to App for advanced history/streams
