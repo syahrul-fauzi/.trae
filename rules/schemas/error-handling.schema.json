@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SBA-Agentic Error Handling Schema",
+  "type": "object",
+  "properties": {
+    "retry": {
+      "type": "object",
+      "properties": {
+        "attempts": { "type": "integer", "default": 3 },
+        "backoff": { "enum": ["exponential", "fixed"], "default": "exponential" }
+      }
+    },
+    "on_failure": {
+      "type": "object",
+      "properties": {
+        "op": { "enum": ["queue", "notification"] },
+        "ref": { "type": "string" }
+      }
+    },
+    "dead_letter_queue": { "type": "boolean", "default": true }
+  }
+}

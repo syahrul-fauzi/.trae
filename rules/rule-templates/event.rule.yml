@@ -1,0 +1,32 @@
+# SBA-Agentic Event-Driven Rule Template
+# Gunakan template ini untuk aksi yang dipicu oleh event sistem.
+
+id: "DOMAIN-EVENT-NN"
+name: "Nama Rule Berbasis Event"
+description: "Menangani aksi otomatis setelah event tertentu terjadi."
+
+trigger:
+  type: "event"
+  events: 
+    - "order.created"
+    - "payment.confirmed"
+  conditions:
+    - "${trigger.data.amount} > 0"
+
+action:
+  steps:
+    - op: "tool"
+      ref: "notification.send_email"
+      input:
+        to: "${trigger.data.customer_email}"
+        subject: "Pesanan Diterima"
+        body: "Halo, pesanan ${trigger.data.order_id} sedang diproses."
+
+constraints:
+  validation: "z.object({ order_id: z.string(), customer_email: z.string().email() })"
+  access_control: ["role:system"]
+
+metadata:
+  version: "1.0.0"
+  priority: "high"
+  category: "CX"

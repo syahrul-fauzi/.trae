@@ -1,0 +1,6 @@
+
+{
+  "scripts": {
+    "agents:start": "npx tsx .trae/agents/hub.ts"
+  }
+}

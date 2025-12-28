@@ -1,0 +1,28 @@
+# SBA-Agentic Scheduled Rule Template
+# Gunakan template ini untuk tugas rutin yang berjalan berdasarkan waktu (cron).
+
+id: "DOMAIN-SCH-NN"
+name: "Nama Rule Berjadwal"
+description: "Menjalankan pembersihan data atau laporan rutin."
+
+trigger:
+  type: "schedule"
+  cron: "0 0 * * *" # Setiap tengah malam
+  timezone: "Asia/Jakarta"
+
+action:
+  steps:
+    - op: "api"
+      ref: "analytics.generate_report"
+      input:
+        type: "daily_summary"
+        date: "${now.yesterday}"
+        tenant_id: "ALL" # Menjalankan untuk semua tenant jika diizinkan
+
+constraints:
+  access_control: ["role:cron-job"]
+
+metadata:
+  version: "1.0.0"
+  priority: "low"
+  category: "DA"

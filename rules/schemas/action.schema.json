@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SBA-Agentic Action Schema",
+  "type": "object",
+  "required": ["steps", "integration"],
+  "properties": {
+    "steps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["op", "ref"],
+        "properties": {
+          "op": { "enum": ["tool", "api", "queue", "db"] },
+          "ref": { "type": "string" },
+          "input": { "type": "object" }
+        }
+      },
+      "minItems": 1
+    },
+    "integration": {
+      "type": "string",
+      "pattern": "^@sba/[a-z-]+$"
+    }
+  }
+}

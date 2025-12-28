@@ -1,0 +1,41 @@
+# SBA-Agentic Base Rule Template
+# Gunakan template ini untuk membuat aturan bisnis baru.
+# Penamaan ID: [DOMAIN]-[SUB]-[NN] (Contoh: BPA-INV-01)
+
+id: "DOMAIN-SUB-NN"
+name: "Nama Aturan yang Deskriptif"
+description: "Jelaskan tujuan aturan ini secara singkat."
+
+trigger:
+  # Pilih event dari domain-events-catalog.md
+  events: ["domain.event.name"]
+  # Gunakan ekspresi logika untuk kondisi (JavaScript-like syntax)
+  conditions: 
+    - "${context.tenant.tier} == 'pro'"
+    - "${trigger.data.status} == 'pending'"
+
+action:
+  # Definisikan langkah-langkah eksekusi
+  steps:
+    - op: "tool" # Pilihan: tool, api, queue, db
+      ref: "capability.id" # Ambil dari action-handlers-catalog.md
+      input:
+        param1: "${trigger.data.value}"
+        tenant_id: "${context.tenant.id}"
+      
+  # Modul integrasi yang bertanggung jawab (opsional)
+  integration: "@sba/workflow-engine"
+
+constraints:
+  # Skema validasi input/output (Zod format string)
+  validation: "z.object({ status: z.string() })"
+  # Izin akses yang diperlukan
+  access_control: ["role:admin", "permission:write"]
+  # Layanan atau rule lain yang harus ada
+  dependencies: ["auth-service", "notification-service"]
+
+# Metadata tambahan untuk audit
+metadata:
+  version: "1.0.0"
+  priority: "medium" # low, medium, high, critical
+  category: "BPA" # BPA, CX, DA, SI

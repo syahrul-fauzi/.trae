@@ -58,3 +58,21 @@
 
 ## Catatan
 - Jika ditemukan ketidaksesuaian saat verifikasi, akan dibuat patch minimal untuk menjaga standar kualitas tanpa mengubah kontrak publik.
+
+## Update Implementasi Terbaru (2025-12-24)
+- Stabilitas unit test `apps/app`: suite unit dipersempit agar tidak menjalankan `e2e/**`, `src/__tests__/**`, dan `src/app/api/**` di `test:unit` → `apps/app/vitest.config.ts:7-23`.
+- Perbaikan state loop `useAgents` saat API mengembalikan list kosong → `apps/app/src/domains/agent/hooks/useAgents.ts:25-92`.
+- Perbaikan a11y/UX reasoning chat (auto-expand saat `showReasoning`, toggle a11y, fallback parsing) → `apps/app/src/components/chat/message-list.tsx:45-213,339-360`.
+- Penggantian beberapa loading spinner menjadi skeleton pada layout penting → `apps/app/src/app/(authenticated)/layout.tsx:96-113`, `apps/app/src/app/(domains)/workspace/layout.tsx:12-28`, `apps/app/src/app/(domains)/workspace/[workspaceId]/layout.tsx`, `apps/app/src/app/(domains)/admin/layout.tsx:21-36`, `apps/app/src/features/dashboard/ui/Dashboard.tsx:29-31`.
+- Perbaikan AGUI agent list: `handleAgentAction` dibuat stabil (`useCallback`), dependency `itemData` dilengkapi, dan ref list diperketat tipenya → `apps/app/src/features/agui/ui/AGUIAgentList.tsx:31-124`.
+- Stabilisasi E2E lokal: default `PLAYWRIGHT_BASE_URL` dipindah ke `http://localhost:3001` untuk menghindari bentrok port → `apps/app/playwright.config.ts:9-18`.
+- Perbaikan `@sba/ui`:
+  - `Typography` memakai `getFontSize()` (bukan token object) untuk mapping ukuran teks → `packages/ui/src/components/Typography.tsx`.
+  - Focus ring memakai bracket syntax agar valid untuk Tailwind arbitrary values → `packages/ui/src/utils/accessibility.ts`.
+  - `Caption` cloneElement icon ditipkan agar `aria-hidden` valid secara TypeScript → `packages/ui/src/components/Caption.tsx:130-134`.
+  - Coverage Vitest hanya aktif jika `VITEST_COVERAGE` diset → `packages/ui/vitest.config.ts`.
+
+## Hasil Verifikasi (Ringkas)
+- `apps/app`: `lint:next`, `type-check`, `test:unit` lulus.
+- `@sba/ui`: `type-check`, `lint`, `test` lulus.
+- E2E smoke `apps/app` (targeted): `e2e/health.smoke.spec.ts` dan kumpulan smoke utama lulus (`25 passed`).
