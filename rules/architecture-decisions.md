@@ -20,5 +20,14 @@ Catatan keputusan arsitektur penting yang diambil dalam pengembangan SBA-Agentic
 - **Decision**: Implementasikan Row Level Security di Supabase.
 - **Consequences**: Setiap kueri wajib menyertakan konteks user/tenant yang valid.
 
+## ADR-004: Integrated Zero-Trust Agent Enforcement (Rube + Orchestrator)
+- **Status**: Accepted
+- **Context**: Agen AI memiliki akses ke alat (tools) sensitif yang dapat memanipulasi data lintas tenant.
+- **Decision**: Integrasikan `Orchestrator` dengan `RubeService` untuk penegakan kebijakan Zero Trust pada setiap eksekusi tool.
+- **Consequences**:
+    - `EnhancedToolRegistry` wajib memanggil `rubeService.enforce()` sebelum eksekusi tool.
+    - `RubeGuardContext` harus menyertakan `tenantId`, `userId`, dan parameter tool secara lengkap.
+    - Setiap tool baru harus didaftarkan sebagai `capability` di Rube Registry.
+
 ---
 *Update dokumen ini setiap ada keputusan arsitektur baru.*
