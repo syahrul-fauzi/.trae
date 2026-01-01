@@ -2,6 +2,82 @@
 
 Semua perubahan signifikan pada sistem aturan dan kebijakan agen akan dicatat di sini.
 
+## [1.2.5] - 2025-12-31
+### Added
+- **Phase 2 Initiative: Workflow & Policy Management**: 
+  - Implemented Monaco-based YAML editor with Rube schema validation.
+  - Added React Flow visualization for multi-step agentic workflows.
+  - Implemented drag-and-drop action catalog for policy authoring.
+  - Added unit tests with Vitest for editor and visualizer components.
+- **Phase 2 Initiative: Desktop Hardening (Tauri)**: 
+  - Migrated Internal Console to Tauri framework for secure desktop execution.
+  - Implemented real-time system resource monitoring (CPU, Memory, Uptime) via Rust `sysinfo` crate.
+  - Added system integrity checks and security scan capabilities to the Hardening Dashboard.
+- **Phase 2 Initiative: Live Telemetry**: 
+  - Integrated WebSocket (Socket.io) for real-time telemetry streaming.
+  - Implemented gRPC-web infrastructure with async iterator support for agent status monitoring.
+  - Enhanced Telemetry Dashboard with live charts and connection protocol switching.
+- **Technical Documentation**: Created `docs/PHASE_2_TECHNICAL_SPEC.md` covering all Phase 2 implementations.
+
+### Fixed
+- **Testing Stability**: Resolved ReactFlow and Monaco Editor environment issues in Vitest.
+- **Tauri Integration**: Fixed command invocation and state management in the Rust backend.
+
+## [1.2.4] - 2025-12-31
+### Added
+- **Internal Console Core UC Implementation**: Completed UC-01 (User Management), UC-02 (Monitoring), UC-03 (Configuration), and UC-04 (Audit Logging & Reporting).
+- **Governance Framework**: Established `docs/GOVERNANCE` with Cross-Team Sync Schedule and Risk Log.
+- **Web Research Benchmarks**: Integrated orchestrated search latency and accuracy benchmarks into architecture and readiness docs.
+- **Standardized Navigation**: Aligned sidebar navigation across all internal administrative interfaces.
+
+### Fixed
+- **Apps Dashboard Stability**: Resolved TypeScript errors in `AnalyticsDashboard.tsx`, `AgentDetailsClient.tsx`, and `DashboardClient.tsx`.
+- **AFD Frontend Integration**: Completed AI Command Bar integration in `EnhancedAGUIDashboard.tsx` with resilient `useAFD` hook support.
+- **Workflow Visualization**: Enhanced `WorkflowVisualizer.tsx` with type-safe node/edge definitions and improved layout.
+- **NestJS API Stability**: Resolved Swagger metadata generation errors and circular dependencies in `AuthResponseDto`.
+- **Tool Registration**: Fixed `ToolsService` initialization by migrating tool registration to `OnModuleInit` lifecycle hook.
+- **Security Package Integrity**: Resolved missing dependencies (`zod`, `jsonwebtoken`) in `@sba/security` and refactored JWT implementation for production robustness.
+- **Internal Console Stability**: Resolved JSDOM `getComputedStyle` issues in a11y tests and verified 100% test pass rate.
+- **Monorepo Consistency**: Aligned security and tool package exports and dependencies.
+
+## [1.2.3] - 2025-12-31
+### Added
+- **AFD Resilience Implementation**: Integrated Circuit Breaker (5 failures/60s) and Caching (1h TTL) into `AfdService`.
+- **AFD Performance Benchmarking**: Validated high-latency handling with `afd.benchmark.spec.ts` (Avg 101ms sequential, 103ms concurrent).
+- **AFD Integration Finalization**: Completed end-to-end integration between Marketing App and AFD Backend.
+- **Type Safety**: Resolved all TypeScript errors in AFD service, controller, and DTOs.
+- **Technical Specification**: Created `AFD_INTEGRATION_SPEC.md` documenting the full API contract and architecture.
+- **Operational Readiness**: Enhanced `AFD_ROLLOUT_PLAN.md` with support runbooks and final regression test cycles.
+- **Load Test Stability**: Optimized `afd.load.spec.ts` for stable execution in CI/CD environments.
+- **KV Package Fix**: Resolved `tenantKey` export issue in `@sba/kv` to unblock staging tests.
+
+## [1.2.2] - 2025-12-31
+### Added
+- **AFD Performance Validation**: Validated 50 concurrent requests with <5ms average latency.
+- **Rollout Documentation**: Added `AFD_ROLLOUT_PLAN.md` and `AFD_INTEGRATION_BENCHMARK.md`.
+- **Package Fixes**: Resolved module resolution issues in `@sba/integrations` and `@sba/observability`.
+- **API Contract Verification**: Confirmed alignment between Marketing App and AFD Backend.
+
+## [1.2.1] - 2025-12-31
+### Added
+- **AFD Backend Implementation**: Completed the Agentic Front Door (AFD) backend module in `apps/api`.
+  - Implemented `AfdController` with multimodal intent capture endpoints.
+  - Implemented `AfdService` with intent processing and task decomposition via `OrchestratorService`.
+  - Added comprehensive integration tests (`afd.workflow.spec.ts`) for intent-to-action mapping.
+  - Integrated `AfdModule` into the main `AppModule`.
+- **Enhanced Test Reliability**: Added `reflect-metadata` and explicit `@Inject` decorators to AFD components to ensure stable dependency injection in Vitest environments.
+
+## [1.2.0] - 2025-12-31
+### Added
+- **Enhanced Documentation Hierarchy**: Updated root `README.md` and `docs/README.md` to reflect full monorepo structure (30+ packages and 7+ apps).
+- **Core Package Indexing**: Linked core packages from `docs/README.md` for faster navigation.
+- **Enterprise-Grade Operational Standards**: Enhanced `OPERATIONAL_STANDARD.md` with Circuit Breakers, mTLS, RTO/RPO targets, and Disaster Recovery protocols.
+- **Go-Live Simulation Framework**: 
+  - Implemented `simulate-go-live-setup.ts` for automated tenant provisioning and feature flagging.
+  - Implemented `simulate-go-live-traffic.ts` for end-to-end E2E traffic simulation (TC-01 to TC-04).
+  - Added `SIMULATION_SCENARIOS.md` documenting the full validation suite.
+- **Progress Tracking**: Updated `docs/PROGRESS.md` with the latest documentation and package readiness status.
+
 ## [1.1.0] - 2025-12-28
 ### Added
 - **Enhanced Reasoning Trace**: Added Analysis, Planning, Execution, and Reflection phases to agent reasoning logic.
