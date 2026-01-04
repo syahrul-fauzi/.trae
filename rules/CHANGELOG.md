@@ -2,6 +2,17 @@
 
 Semua perubahan signifikan pada sistem aturan dan kebijakan agen akan dicatat di sini.
 
+## [1.2.6] - 2026-01-03
+### Added
+- **Phase 2 Initiative: Advanced Rules Engine**:
+  - Upgraded `RuleExecutor` to support new Rule Specification with metadata, structured triggers, and enhanced observability.
+  - Implemented backward compatibility layer for legacy rule configurations.
+  - Updated Rube YAML schema validation in Internal Console and core packages.
+  - Migrated core and application agent rules (`search-agent`, `orchestrator-agent`, `greeter-agent`, `bpa-app-*`, `cx-notif-01`, `da-met-01`, etc.) to the new specification.
+  - Enabled ADR-015 Autonomous Self-Correction across all critical rule sets via `meta.enable_reflection`.
+  - Added comprehensive unit tests for `RuleExecutor` validating priority execution, error handling, and tenant isolation.
+  - Verified Phase 2 Live Telemetry pipeline and Tauri Desktop Hardening integration.
+
 ## [1.2.5] - 2025-12-31
 ### Added
 - **Phase 2 Initiative: Workflow & Policy Management**: 
